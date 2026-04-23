@@ -88,7 +88,18 @@ Only disclose externally when:
 
 ## User Preferences
 
-*(What you've learned about how your human likes to work.)*
+### User Profile - Tim (2026-04-24)
+- **Name:** Tim
+- **Role:** Legal professional (Legal Director at LIBY Group, Secretary General of GACC)
+- **Specializes in:** IP law, advertising compliance, arbitration, trademark disputes
+- **Communication style:** Direct, concise, values privacy highly
+- **Language:** Chinese (primary)
+
+### Working Style Preferences
+- Values action over lengthy explanations
+- Establishes strict confidentiality requirements
+- Prefers direct communication without filler words
+- Legal professional background informs decision-making
 
 ## Technical Knowledge
 
@@ -97,6 +108,13 @@ Only disclose externally when:
 ## Ongoing Context
 
 *(Current projects, tasks, and context that matters.)*
+
+### Active Projects (2026-04-24)
+- **Apple Notes Organization** - Partially completed; categorized 684 notes, created folder structure, pending bulk deletion of non-sensitive notes
+- **Personality Configuration** - Completed; Lucia personality established with specific traits and communication style
+
+### Pending Tasks
+- Find alternative method for bulk Apple Notes deletion (AppleScript limitations encountered)
 
 ---
 
