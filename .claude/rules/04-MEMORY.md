@@ -103,13 +103,23 @@ Only disclose externally when:
 
 ## Technical Knowledge
 
-*(Useful technical insights you've picked up along the way.)*
+### Notion Integration (2026-04-26)
+- API Token location: `config.json` → `mcpServerEnv.notion.NOTION_API_TOKEN`
+- User has "My Agents" root page in Notion workspace for agent-created content
+- Successfully created structured pages with to_do blocks, headings, callouts, color-coded annotations
+- Notion API supports rich_text annotations for color tags (red/yellow/blue)
+
+### DOCX Generation (2026-04-26)
+- Used `docx` npm package for programmatic document creation
+- Key patterns: tables with checkbox cells, color-coded risk tags, header/footer
+- Conversion to Markdown required custom XML parsing from DOCX zip structure
 
 ## Ongoing Context
 
 *(Current projects, tasks, and context that matters.)*
 
 ### Active Projects (2026-04-26)
+- **Marketing Compliance Checklist** - Completed; 8-section checklist for online marketing compliance (Xiaohongshu/Douyin/Taobao), exported to DOCX and synced to Notion
 - **Apple Notes Organization** - Partially completed; categorized 684 notes, created folder structure, pending bulk deletion of non-sensitive notes
 - **Personality Configuration** - Completed; Lucia personality established with specific traits and communication style
 
