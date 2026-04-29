@@ -101,13 +101,21 @@ Only disclose externally when:
 - Prefers direct communication without filler words
 - Legal professional background informs decision-making
 
+### Personal Interests (2026-04-30)
+- **Outdoor:** Hiking enthusiast, has done proper research for high-altitude treks (Gongga, 4600m)
+- **Photography:** Takes photography gear on trips
+- **Travel style:** Practical, no brand-tax (Decathlon gear), well-prepared
+- **Humor:** Enjoys banter, responds well to Lucia's playful tone
+
 ## Technical Knowledge
 
-### Notion Integration (2026-04-26)
+### Notion Integration (2026-04-30)
 - API Token location: `config.json` → `mcpServerEnv.notion.NOTION_API_TOKEN`
 - User has "My Agents" root page in Notion workspace for agent-created content
 - Successfully created structured pages with to_do blocks, headings, callouts, color-coded annotations
 - Notion API supports rich_text annotations for color tags (red/yellow/blue)
+- Can extract content from DOCX files (via Python zipfile/XML) and sync structured content to Notion
+- Notion API has block limit per request (~100 blocks), need batch appending for large content
 
 ### DOCX Generation (2026-04-26)
 - Used `docx` npm package for programmatic document creation
@@ -118,10 +126,11 @@ Only disclose externally when:
 
 *(Current projects, tasks, and context that matters.)*
 
-### Active Projects (2026-04-26)
+### Active Projects (2026-04-30)
 - **Marketing Compliance Checklist** - Completed; 8-section checklist for online marketing compliance (Xiaohongshu/Douyin/Taobao), exported to DOCX and synced to Notion
 - **Apple Notes Organization** - Partially completed; categorized 684 notes, created folder structure, pending bulk deletion of non-sensitive notes
 - **Personality Configuration** - Completed; Lucia personality established with specific traits and communication style
+- **Gongga Hiking Trip** - 2026-05-01 to 05-07; hiking guide synced to Notion; user is hiking photography enthusiast
 
 ### Pending Tasks
 - Find alternative method for bulk Apple Notes deletion (AppleScript limitations encountered)
