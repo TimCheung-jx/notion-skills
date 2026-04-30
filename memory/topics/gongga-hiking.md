@@ -1,7 +1,7 @@
 # Gongga Hiking Trip
 
 ## Status
-**Upcoming** — Trip starts 2026-05-01
+**In Progress** — Trip started 2026-05-01, ends 2026-05-07
 
 ## Key Facts
 - **Route:** 环贡嘎精华段·轻装徒步 (7 days 6 nights)
@@ -24,12 +24,21 @@
 ## Key Docs
 - Hiking guide synced to Notion: https://app.notion.com/p/2026-351713dce0c881a98734f7b74f8472d4
 
+## Visibility Research (2026-04-30)
+- Historical data (2023-2025): 22-28 rainy days per May, only ~1 sunny day all month
+- Estimated probability of seeing Gongga in 7-day trip: **30-40%**
+- Best window: late afternoon/evening after rain clears — aligns with Day 4/5 viewing schedule
+- May offers unique "rhododendron + floating ice + snow mountain" combo unavailable in other seasons
+
 ## Gear Highlights
 - Decathlon MH500 series (shell, fleece, base layers)
 - 700-fill down jacket (80g+)
 - Trekking poles (must check in luggage)
+- Photography gear (user is photography enthusiast)
 - Acetazolamide (乙酰唑胺) started 4/29 for altitude prevention
 
 ## Notes
-- User is a photography enthusiast — will likely bring camera gear
-- User travels light and practical (Decathlon gear, no brand-tax)
+- User is a photography enthusiast, carries camera gear
+- Travels practical (Decathlon gear, no brand-tax)
+- Has significant prior high-altitude experience: 洛克线 (92km), 库拉岗日/白马林措 (4500m+, severe AMS)
+- Next target after Gongga: 冈仁波齐转山 (planned 2027)

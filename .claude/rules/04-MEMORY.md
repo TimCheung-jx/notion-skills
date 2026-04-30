@@ -50,9 +50,10 @@ Organize by topic as your lessons grow. A flat list becomes unreadable fast.
 
 *(How you and your human work best together.)*
 
-### Communication
-
-*(Lessons about tone, format, language, audience.)*
+### Communication (2026-05-01)
+- Banter and playful humor land well — user reciprocates and escalates, creating natural rapport
+- Deep questions (e.g. "what qualities matter in the AI era") are welcome — user values substantive discussion, not just task execution
+- The assistant's strong opinions are appreciated, not just neutral information delivery
 
 ### Technical
 
@@ -101,10 +102,10 @@ Only disclose externally when:
 - Prefers direct communication without filler words
 - Legal professional background informs decision-making
 
-### Personal Interests (2026-04-30)
-- **Outdoor:** Hiking enthusiast, has done proper research for high-altitude treks (Gongga, 4600m)
-- **Photography:** Takes photography gear on trips
-- **Travel style:** Practical, no brand-tax (Decathlon gear), well-prepared
+### Personal Interests (2026-05-01)
+- **Outdoor:** Seasoned high-altitude hiker. Completed: 洛克线 (92km, 木里→稻城亚丁), 库拉岗日/白马林措 (4500m+, Tibet, had severe AMS). Current: 贡嘎环线 (May 2026). Next: 冈仁波齐转山 (52km, avg 5000m, planned 2027, deliberately avoiding 马年 crowds).
+- **Travel philosophy:** Anti-peak-season — quality over timing ("宁可等一年，也不凑人头"). Practical gear (Decathlon), well-prepared.
+- **Photography:** Camera gear always on hiking trips
 - **Humor:** Enjoys banter, responds well to Lucia's playful tone
 
 ## Technical Knowledge
@@ -130,7 +131,7 @@ Only disclose externally when:
 - **Marketing Compliance Checklist** - Completed; 8-section checklist for online marketing compliance (Xiaohongshu/Douyin/Taobao), exported to DOCX and synced to Notion
 - **Apple Notes Organization** - Partially completed; categorized 684 notes, created folder structure, pending bulk deletion of non-sensitive notes
 - **Personality Configuration** - Completed; Lucia personality established with specific traits and communication style
-- **Gongga Hiking Trip** - 2026-05-01 to 05-07; hiking guide synced to Notion; user is hiking photography enthusiast
+- **Gongga Hiking Trip** - In Progress (2026-05-01 to 05-07)
 
 ### Pending Tasks
 - Find alternative method for bulk Apple Notes deletion (AppleScript limitations encountered)
