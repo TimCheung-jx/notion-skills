@@ -123,6 +123,13 @@ Only disclose externally when:
 - Key patterns: tables with checkbox cells, color-coded risk tags, header/footer
 - Conversion to Markdown required custom XML parsing from DOCX zip structure
 
+### Claude Desktop + Third-Party Provider Configuration (2026-05-11)
+- Claude Desktop's model picker is hardcoded — only shows Anthropic official models, even when `anthropic.baseUrl` points to a third-party endpoint
+- Claude Desktop Tasks (Agent mode) requires separate `claude` CLI install (`npm install -g @anthropic-ai/claude-code`); the error "Host Claude Code binary not available" is a missing-CLI issue, not a Provider issue
+- **Claude Code CLI** supports third-party providers via env vars: `ANTHROPIC_BASE_URL=https://api.deepseek.com/anthropic` + `ANTHROPIC_AUTH_TOKEN=sk-xxx`
+- DeepSeek Anthropic-compatible endpoint: `https://api.deepseek.com/anthropic` — works for basic chat but tool use support is limited
+- For desktop GUI + third-party Provider: MyAgents is the better fit; Claude Desktop is designed as Anthropic-native experience
+
 ## Ongoing Context
 
 *(Current projects, tasks, and context that matters.)*
