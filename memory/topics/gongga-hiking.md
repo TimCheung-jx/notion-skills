@@ -1,7 +1,7 @@
 # Gongga Hiking Trip
 
 ## Status
-**In Progress** — Trip started 2026-05-01, ends 2026-05-07
+**Completed** — Trip completed 2026-05-07. Tim confirmed he's back.
 
 ## Key Facts
 - **Route:** 环贡嘎精华段·轻装徒步 (7 days 6 nights)
@@ -36,6 +36,12 @@
 - Trekking poles (must check in luggage)
 - Photography gear (user is photography enthusiast)
 - Acetazolamide (乙酰唑胺) started 4/29 for altitude prevention
+
+## Trip Outcome (2026-05-11)
+- **Completed successfully** — Tim confirmed he's back and trip went well
+- **Weather:** Heavy snow first 2 days, couldn't see Gongga from viewing points. Cleared up later days, beautiful scenery. Captured 日照金山 photo (shared 2026-05-11)
+- **Altitude:** Day 1 headache (mild AMS), everything normal after acclimatization
+- **Verdict:** Worth it — conditions aligned with the 30-40% visibility estimate
 
 ## Notes
 - User is a photography enthusiast, carries camera gear
