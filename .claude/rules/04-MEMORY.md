@@ -103,7 +103,7 @@ Only disclose externally when:
 - Legal professional background informs decision-making
 
 ### Personal Interests (2026-05-01)
-- **Outdoor:** Seasoned high-altitude hiker. Completed: 洛克线 (92km, 木里→稻城亚丁), 库拉岗日/白马林措 (4500m+, Tibet, had severe AMS). Current: 贡嘎环线 (May 2026). Next: 冈仁波齐转山 (52km, avg 5000m, planned 2027, deliberately avoiding 马年 crowds).
+- **Outdoor:** Seasoned high-altitude hiker. Completed: 洛克线 (92km, 木里→稻城亚丁), 库拉岗日/白马林措 (4500m+, Tibet, had severe AMS), 贡嘎环线 (May 2026, heavy snow first 2 days, cleared later, captured 日照金山). Next: 冈仁波齐转山 (52km, avg 5000m, planned 2027, deliberately avoiding 马年 crowds).
 - **Travel philosophy:** Anti-peak-season — quality over timing ("宁可等一年，也不凑人头"). Practical gear (Decathlon), well-prepared.
 - **Photography:** Camera gear always on hiking trips
 - **Humor:** Enjoys banter, responds well to Lucia's playful tone
