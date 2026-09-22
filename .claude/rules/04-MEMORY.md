@@ -131,6 +131,13 @@ Only disclose externally when:
 - DeepSeek Anthropic-compatible endpoint: `https://api.deepseek.com/anthropic` — works for basic chat but tool use support is limited
 - For desktop GUI + third-party Provider: MyAgents is the better fit; Claude Desktop is designed as Anthropic-native experience
 
+### 网页中文字体 (2026-09-13)
+- 中文**正文不要加载 webfont**（单字重 OTF ~16MB / WOFF2 ~8MB），用系统栈：
+  `system-ui, -apple-system, "PingFang SC", "HarmonyOS Sans SC", "Microsoft YaHei", "Source Han Sans SC"`
+- webfont 只留给标题——字数可控，子集化后 30–80KB，可以放心花预算
+- 免费商用（安全）：思源系列(SIL OFL)、HarmonyOS Sans、MiSans、阿里巴巴普惠体、得意黑、霞鹜文楷
+- **字体授权是雷区**：方正、汉仪常年做字体维权，赔偿按字数 × 使用范围。用非免费字体前先看合同
+
 ## Ongoing Context
 
 *(Current projects, tasks, and context that matters.)*
@@ -140,6 +147,12 @@ Only disclose externally when:
 - **Apple Notes Organization** - Partially completed; categorized 684 notes, created folder structure, pending bulk deletion of non-sensitive notes
 - **Personality Configuration** - Completed; Lucia personality established with specific traits and communication style
 - **Gongga Hiking Trip** - Completed (2026-05-01 to 05-07). Heavy snow days 1-2, mild AMS, cleared later with beautiful scenery. Captured 日照金山 photo.
+
+### Rezig AI 产品（2026-09-13 起，探索中）
+- AI 产品的命名 + 设计系统。英文名 **Rezig**（源自 Chenrezig / 藏语对观音的称呼，意为「以眼注视者」），
+  中文首选 **察音**，备选 **观智**
+- 设计系统「高山冷光 / Alpine Cold Light」，暗色优先 → `workspace/0913-rezig-design-system/DESIGN.md`
+- 未决：产品形态（决定亮色是否升为主模式）、中文名定稿。完整上下文见 `memory/topics/rezig.md`
 
 ### Pending Tasks
 - Find alternative method for bulk Apple Notes deletion (AppleScript limitations encountered)
