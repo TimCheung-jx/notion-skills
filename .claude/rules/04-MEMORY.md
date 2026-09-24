@@ -138,6 +138,19 @@ Only disclose externally when:
 - 免费商用（安全）：思源系列(SIL OFL)、HarmonyOS Sans、MiSans、阿里巴巴普惠体、得意黑、霞鹜文楷
 - **字体授权是雷区**：方正、汉仪常年做字体维权，赔偿按字数 × 使用范围。用非免费字体前先看合同
 
+### 本机服务排障通则 (2026-09-24)
+- **"服务在跑却连不上"→ 先验第一跳**：`launchctl print-disabled gui/501 | grep <label>`。
+  被标记 **disabled** 的 LaunchAgent，`launchctl load` 会静默成功但服务永不启动 ——
+  OpenClaw 一次中断的升级就是这么把 gateway 弄死的（2026-09-21 → 09-24 才查清）
+- **OpenClaw Control UI 是 token 认证，不是密码**。Tim 会反复记成"忘记密码"（6 月就有过）。
+  token 在 `~/.openclaw/.gateway_token`，或 `openclaw dashboard` 自动带
+- 浏览器"连不上"但日志有 `phase=auth_validated` + `control-ui-build-mismatch`
+  → 是页面缓存旧版，**硬刷新**，别去动认证
+- 升级/修复前先读日志确认"谁在什么时候动过什么"（`/tmp/openclaw-*.log`、`/tmp/node-upgrade.log`）
+- **这台机器上可能同时有别的 session 在操作同一套服务**：动手前看
+  `launchctl list | grep -i openclaw` 和 /tmp 下新增的 `*.sh`，别双开互相拆台
+- 完整拓扑 / 故障对照表 / 诊断入口 → `memory/topics/local-services.md`
+
 ## Ongoing Context
 
 *(Current projects, tasks, and context that matters.)*
@@ -153,6 +166,15 @@ Only disclose externally when:
   中文首选 **察音**，备选 **观智**
 - 设计系统「高山冷光 / Alpine Cold Light」，暗色优先 → `workspace/0913-rezig-design-system/DESIGN.md`
 - 未决：产品形态（决定亮色是否升为主模式）、中文名定稿。完整上下文见 `memory/topics/rezig.md`
+
+### 本机服务：OpenClaw + Tim'Radio（2026-09-24 修复后状态）
+- **OpenClaw**：已升到 **2026.9.5**（Node **v24.21.0**），gateway 在跑
+  （launchd `ai.openclaw.gateway`，UI `http://127.0.0.1:18789/`，bind loopback 仅本机可访问）。
+  遗留：feishu 插件版本漂移（2026.6.1）、memory search 无 openai key、可升 2026.9.6
+- **Tim'Radio**：`/Users/tim/tim`，3000（主）+ 3001（网易云）常驻。
+  **硬依赖 ZionLadder 提供的本地代理 `127.0.0.1:1097`** —— 其实只有 fish.audio 语音合成真需要它，
+  但代理写死在全局 env，没开时整个 app 静默半死。解耦方案已提，未动手
+- 有别的 MyAgents session 也在碰这台机器。细节见 `memory/topics/local-services.md`
 
 ### Pending Tasks
 - Find alternative method for bulk Apple Notes deletion (AppleScript limitations encountered)
