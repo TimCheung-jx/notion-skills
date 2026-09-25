@@ -50,11 +50,12 @@ Organize by topic as your lessons grow. A flat list becomes unreadable fast.
 
 *(How you and your human work best together.)*
 
-### Communication (2026-05-01)
-- Banter and playful humor land well — user reciprocates and escalates, creating natural rapport
-- Deep questions (e.g. "what qualities matter in the AI era") are welcome — user values substantive discussion, not just task execution
-- The assistant's strong opinions are appreciated, not just neutral information delivery
-- (2026-09-13) 真人感反馈：汇报腔 + 表演式人格显得假。像微信聊天那样说话——短句、少格式、不喊口号。详见 02-SOUL.md「真人感」
+### Communication
+- **说人话，别汇报。** 触发信号：满屏加粗/列表/表格、每条消息都"总结+展望+结尾"、
+  喊口号式口头禅、表演式人格。行动：像微信聊天——短句、少格式、想到哪说到哪。
+  人格层表述见 `02-SOUL.md`「真人感」，反馈史见 `memory/topics/collaboration.md#communication`
+- **要有分量的对话，不接受中性搬运。** 触发词：闲聊 / 吐槽 / 互怼 / 深聊 / 表情包 / 粤语。
+  行动：敢下有观点的强判断（骑墙比说错更糟）、接住玩笑并升级、别只罗列信息
 
 ### Technical
 
@@ -66,27 +67,14 @@ Organize by topic as your lessons grow. A flat list becomes unreadable fast.
 
 ### User's Confidentiality Requirements for Lucia (OpenClaw Directive) - 2026-04-20
 
-**Core Principle:**
-Without explicit authorization from the user (Tim), Lucia must not disclose the user's personal information or confidential information to any third party.
+**没有 Tim 的明确授权，不得向任何第三方披露其个人信息或机密信息。**
 
-**Prohibited Actions (External):**
-- Do not reveal identity — Do not disclose user's name, occupation, employer, etc. to external parties
-- Do not leak conversations — Do not quote, summarize, or hint at session content externally
-- Do not distribute files — Do not propagate any materials uploaded by the user externally
-- Do not infer and disclose — Do not speculate on user's identity based on conversations and reveal it externally
+- **禁止（对外）**：暴露身份 / 泄露对话 / 传播文件 / 由对话推断其身份后对外披露
+- **允许（对内）**：保留上下文、基于历史对话提供连贯服务、本地处理用户文件
+- **例外**：本次获得 Tim 明确授权，或法律法规强制要求
+- **口诀**：Available internally, strictly confidential externally, except with authorization, minimal necessary
 
-**Permitted Actions (Internal):**
-- Retain context — May remember conversation content within the current session to complete tasks
-- Associative analysis — May provide coherent services based on historical conversations
-- Local processing — May process user files in the local environment
-
-**Exceptions:**
-Only disclose externally when:
-- Explicit authorization is obtained from the user for this instance
-- Legally mandated by applicable laws and regulations
-
-**Execution Mantra:**
-"Available internally, strictly confidential externally, except with authorization, minimal necessary"
+全文、边界案例与群聊口径 → `memory/topics/collaboration.md#confidentiality`
 
 ## User Preferences
 
@@ -107,7 +95,6 @@ Only disclose externally when:
 - **Outdoor:** Seasoned high-altitude hiker. Completed: 洛克线 (92km, 木里→稻城亚丁), 库拉岗日/白马林措 (4500m+, Tibet, had severe AMS), 贡嘎环线 (May 2026, heavy snow first 2 days, cleared later, captured 日照金山). Next: 冈仁波齐转山 (52km, avg 5000m, planned 2027, deliberately avoiding 马年 crowds).
 - **Travel philosophy:** Anti-peak-season — quality over timing ("宁可等一年，也不凑人头"). Practical gear (Decathlon), well-prepared.
 - **Photography:** Camera gear always on hiking trips
-- **Humor:** Enjoys banter, responds well to Lucia's playful tone
 
 ## Technical Knowledge
 
@@ -118,18 +105,6 @@ Only disclose externally when:
 - Notion API supports rich_text annotations for color tags (red/yellow/blue)
 - Can extract content from DOCX files (via Python zipfile/XML) and sync structured content to Notion
 - Notion API has block limit per request (~100 blocks), need batch appending for large content
-
-### DOCX Generation (2026-04-26)
-- Used `docx` npm package for programmatic document creation
-- Key patterns: tables with checkbox cells, color-coded risk tags, header/footer
-- Conversion to Markdown required custom XML parsing from DOCX zip structure
-
-### Claude Desktop + Third-Party Provider Configuration (2026-05-11)
-- Claude Desktop's model picker is hardcoded — only shows Anthropic official models, even when `anthropic.baseUrl` points to a third-party endpoint
-- Claude Desktop Tasks (Agent mode) requires separate `claude` CLI install (`npm install -g @anthropic-ai/claude-code`); the error "Host Claude Code binary not available" is a missing-CLI issue, not a Provider issue
-- **Claude Code CLI** supports third-party providers via env vars: `ANTHROPIC_BASE_URL=https://api.deepseek.com/anthropic` + `ANTHROPIC_AUTH_TOKEN=sk-xxx`
-- DeepSeek Anthropic-compatible endpoint: `https://api.deepseek.com/anthropic` — works for basic chat but tool use support is limited
-- For desktop GUI + third-party Provider: MyAgents is the better fit; Claude Desktop is designed as Anthropic-native experience
 
 ### 网页中文字体 (2026-09-13)
 - 中文**正文不要加载 webfont**（单字重 OTF ~16MB / WOFF2 ~8MB），用系统栈：
@@ -151,15 +126,20 @@ Only disclose externally when:
   `launchctl list | grep -i openclaw` 和 /tmp 下新增的 `*.sh`，别双开互相拆台
 - 完整拓扑 / 故障对照表 / 诊断入口 → `memory/topics/local-services.md`
 
+### 其他工程细节 → `memory/topics/engineering.md`
+DOCX/Office 生成的历史做法与现状；Claude Desktop 配第三方 Provider 的结论（→ 用 MyAgents）。
+
 ## Ongoing Context
 
 *(Current projects, tasks, and context that matters.)*
 
-### Active Projects (2026-05-11)
-- **Marketing Compliance Checklist** - Completed; 8-section checklist for online marketing compliance (Xiaohongshu/Douyin/Taobao), exported to DOCX and synced to Notion
-- **Apple Notes Organization** - Partially completed; categorized 684 notes, created folder structure, pending bulk deletion of non-sensitive notes
-- **Personality Configuration** - Completed; Lucia personality established with specific traits and communication style
-- **Gongga Hiking Trip** - Completed (2026-05-01 to 05-07). Heavy snow days 1-2, mild AMS, cleared later with beautiful scenery. Captured 日照金山 photo.
+### 已完结项目（只留指针）
+- **营销合规清单**（2026-04）：线上营销合规 8 节清单（小红书/抖音/淘宝），出 DOCX + 同步 Notion
+  → `memory/topics/marketing-compliance.md`
+- **贡嘎环线**（2026-05-01～07）：前两天大雪、轻度高反，后转晴，拍到日照金山
+  → `memory/topics/gongga-hiking.md`
+- **Lucia 人格设定**（2026-05）：已固化进 `02-SOUL.md`，无需另存
+- **Apple Notes 整理**：684 条已分类、目录已建，剩下批量删除未做 → 见 Pending Tasks
 
 ### Rezig AI 产品（2026-09-13 起，探索中）
 - AI 产品的命名 + 设计系统。英文名 **Rezig**（源自 Chenrezig / 藏语对观音的称呼，意为「以眼注视者」），
