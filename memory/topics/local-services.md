@@ -149,8 +149,10 @@
 - `moonshot` provider 已补进 `models.providers`，baseUrl 指向 **`api.moonshot.cn`**（国内站）
 - 可清理：`modelPolicy.allow` 里还留着没用的 `kimi/kimi-k2.7-code`，
   `models.providers.kimi` 那段配置也是错的（kimi coding 要 api.kimi.com，Tim 没订阅）
-- **旧 key 尾号 5ef7 散落在多个 `~/.openclaw/*.bak*` 与 `last-good` 里**，2026-09-30 换新后
-  那些备份文件没清 —— 磁盘上仍有失效凭据，要清理/轮换时留意
+- **凭据散落位置（2026-09-30 已清理）**：旧 key 曾同时存在于 6 个 `openclaw.json.*` 备份、
+  `.env.bak`、`.zshrc` 的 `claude-ds` alias、`state/openclaw.sqlite`。
+  备份已移入废纸篓；**sqlite 是运行库不能碰**；`.zshrc` 那处待 Tim 决定。
+  → **换 key 时记得全盘 `grep -rl "<旧key>" ~/.openclaw/ ~/.zshrc`，别只改一处**
 
 **Tim'Radio**
 - 代理依赖解耦（见第二节末）
