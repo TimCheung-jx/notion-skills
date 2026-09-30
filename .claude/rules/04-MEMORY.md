@@ -117,6 +117,14 @@ Organize by topic as your lessons grow. A flat list becomes unreadable fast.
 - **"服务在跑却连不上"→ 先验第一跳**：`launchctl print-disabled gui/501 | grep <label>`。
   被标记 **disabled** 的 LaunchAgent，`launchctl load` 会静默成功但服务永不启动 ——
   OpenClaw 一次中断的升级就是这么把 gateway 弄死的（2026-09-21 → 09-24 才查清）
+- **改了配置不生效 → 往上找优先级更高的一层，别在原地反复改。** OpenClaw 的凭据有三层：
+  `service-env/<label>.env` > `~/.openclaw/.env` > `openclaw.json`，**环境变量压过配置文件**。
+  2026-09-30 换 deepseek key 时改 config、跑 `paste-api-key` 全都没用，因为旧 key 写死在
+  service-env 里（正解：`export <KEY>=新值 && openclaw gateway install --force`）。
+  同源：`config set` 提示"无需重启即可生效"不可信，apiKey 类改动照样要重启。
+  → **改凭据前先 `grep -rl "<旧值>" ~/` 找全部落点**，一次改干净
+- **判断一个值有没有效，脱离被测系统去测。** key 是否可用，直接 curl 官方 API 就能一刀切开
+  "key 坏" 还是 "配置没生效"，比在系统里翻日志快得多（2026-09-30 靠这招定位）
 - **OpenClaw Control UI 是 token 认证，不是密码**。Tim 会反复记成"忘记密码"（6 月就有过）。
   token 在 `~/.openclaw/.gateway_token`，或 `openclaw dashboard` 自动带
 - 浏览器"连不上"但日志有 `phase=auth_validated` + `control-ui-build-mismatch`
@@ -147,9 +155,14 @@ DOCX/Office 生成的历史做法与现状；Claude Desktop 配第三方 Provide
 - 设计系统「高山冷光 / Alpine Cold Light」，暗色优先 → `workspace/0913-rezig-design-system/DESIGN.md`
 - 未决：产品形态（决定亮色是否升为主模式）、中文名定稿。完整上下文见 `memory/topics/rezig.md`
 
-### 本机服务：OpenClaw + Tim'Radio（2026-09-24 修复后状态）
-- **OpenClaw**：已升到 **2026.9.5**（Node **v24.21.0**），gateway 在跑
-  （launchd `ai.openclaw.gateway`，UI `http://127.0.0.1:18789/`，bind loopback 仅本机可访问）。
+### 本机服务：OpenClaw + Tim'Radio（2026-09-30 更新）
+- **OpenClaw**：2026.9.5（Node v24.21.0），gateway 在跑（launchd `ai.openclaw.gateway`，
+  UI `http://127.0.0.1:18789/`，bind loopback 仅本机可访问）。飞书通道 running。
+  **模型链**：主 `deepseek/deepseek-v4-pro` → fallback `moonshot/kimi-k2.6` → `moonshot/kimi-k3`。
+  **注意**：`moonshot/` 与 `kimi/` 是两个不同产品，key 不通用 —— moonshot 走国内站
+  `api.moonshot.cn`，`kimi/` 是 Kimi Coding（要 `api.kimi.com`，Tim 没订阅，配置已清）
+  **待办**：9-30 换 key 时两把都在对话里露过 → Tim 应轮换；`~/.zshrc` 的 `claude-ds`
+  alias 仍挂着那把失效 key，等他决定改还是删
   遗留：feishu 插件版本漂移（2026.6.1）、memory search 无 openai key、可升 2026.9.6
 - **Tim'Radio**：`/Users/tim/tim`，3000（主）+ 3001（网易云）常驻。
   **硬依赖 ZionLadder 提供的本地代理 `127.0.0.1:1097`** —— 其实只有 fish.audio 语音合成真需要它，

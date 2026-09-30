@@ -1,7 +1,7 @@
 # 本机服务运维（OpenClaw / Tim'Radio）
 
 > 覆盖 Tim 这台 Mac mini 上常驻的两套自建服务。硬件/系统：`Tim的Mac mini`，macOS 26.x，用户 `tim`。
-> 最后更新：2026-09-24
+> 最后更新：2026-09-30
 
 ## 一、服务拓扑
 
@@ -48,9 +48,9 @@
 | 忘了"登录密码" | 它没有密码 | **Control UI 是 token 认证**；token 在 `~/.openclaw/.gateway_token`，或 `openclaw dashboard` 自动带 |
 | 出网全失败但本地通 | `lsof -nP -iTCP:1097 -sTCP:LISTEN` | ZionLadder 没开 |
 | 升级后服务不起来 | `/tmp/openclaw-update.log`、`/tmp/node-upgrade.log`、`~/.openclaw/logs/gateway-restart.log` | 升级中断留下 disabled 状态 |
-| 全部对话报 401 / 飞书不回 | `grep "401 Authentication Fails" ~/Library/Logs/openclaw/gateway.log` 看 key 尾号 | key 失效；**改 config 往往没用**，见三.5 |
+| 全部对话报 401 / 飞书不回 | `grep "401 Authentication Fails" ~/Library/Logs/openclaw/gateway.log` 看 key 尾号 | key 失效；**改 config 往往没用**，见五 |
 | 改了 key 还是不生效 | `~/.openclaw/service-env/ai.openclaw.gateway.env` 里的 `*_API_KEY` | 环境变量压过 config |
-| `config set` 报 config invalid | `openclaw config validate` 看具体字段 | 先 `doctor --fix` 解锁，见三.6 |
+| `config set` 报 config invalid | `openclaw config validate` 看具体字段 | 先 `doctor --fix` 解锁，见六 |
 
 ### 核心坑：中断的升级会把 LaunchAgent 设成 disabled
 被掐断的更新助手会让 job 在 launchd 里变成 **unloaded and disabled**。
@@ -86,7 +86,7 @@
   排查中发现两个独立坑，见下节「OpenClaw API key 的层级」。
   最终修复：换 key + 重装服务 + 补 moonshot provider + 配 fallback 链。
 
-## 三.5、OpenClaw API key 的层级（2026-09-30 吃到的坑）
+## 五、OpenClaw API key 的层级（2026-09-30 吃到的坑）
 
 **改 `openclaw.json` 里的 `models.providers.*.apiKey` 经常没用，因为环境变量优先级更高。**
 
@@ -123,7 +123,7 @@
 - `kimi/` provider 指向 `api.moonshot.cn` 会 400（协议/端点都不对）。Tim 没有 kimi.com 订阅，
   所以 `kimi/` 这条基本用不了，`modelPolicy.allow` 里还留着 `kimi/kimi-k2.7-code`（可清理）。
 
-## 三.6、配置被判 invalid 会连锁锁死命令（2026-09-30）
+## 六、配置被判 invalid 会连锁锁死命令（2026-09-30）
 
 `channels.feishu.streaming` 是个空对象 `{}`（升级残留，新版要求 boolean）。
 后果不是"飞书流式不生效"，而是 **整个 config 判为 invalid**，然后
@@ -135,7 +135,7 @@
   它会自己停，但**可能拉不回来**（报 `Gateway could not be restored`）—— 那就手动
   `openclaw gateway start` 补一下。停网关期间服务是断的，要跟 Tim 打招呼。
 
-## 五、遗留待办
+## 七、遗留待办
 
 **OpenClaw**（doctor 报出，未处理）
 - feishu 插件版本漂移：插件 2026.6.1 vs 网关 2026.9.5
@@ -158,16 +158,19 @@
 - 代理依赖解耦（见第二节末）
 - ZionLadder 不随开机启动 → 重启后 radio 必然静默半死
 
-## 六、诊断入口速查
+## 八、诊断入口速查
 
 ```
 # OpenClaw
 launchctl list | grep -i openclaw
 launchctl print-disabled gui/501 | grep openclaw        # ← "在却起不来"先查这个
 tail -f ~/Library/Logs/openclaw/gateway.log
+grep "401 Authentication Fails" ~/Library/Logs/openclaw/gateway.log | tail -3   # 看实际用的 key 尾号
 /tmp/openclaw-update.log  /tmp/node-upgrade.log  /tmp/openclaw-fix.log   # 谁在何时动了什么
 ~/.openclaw/logs/gateway-restart.log
 cd ~/.openclaw && openclaw doctor          # 先看，别急着 --fix
+~/.openclaw/service-env/ai.openclaw.gateway.env   # ← 真正生效的 env（压过 openclaw.json）
+grep -rl "<旧key>" ~/.openclaw/ ~/.zshrc   # 换凭据前先找全部落点
 
 # Tim'Radio
 tail -f /Users/tim/tim/logs/server.log     # 无时间戳，只能看尾部
