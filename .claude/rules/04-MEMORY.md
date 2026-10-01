@@ -113,6 +113,14 @@ Organize by topic as your lessons grow. A flat list becomes unreadable fast.
 - 免费商用（安全）：思源系列(SIL OFL)、HarmonyOS Sans、MiSans、阿里巴巴普惠体、得意黑、霞鹜文楷
 - **字体授权是雷区**：方正、汉仪常年做字体维权，赔偿按字数 × 使用范围。用非免费字体前先看合同
 
+### 「开源所以能改造」要先分层判断 (2026-10-01)
+- 被问某产品能不能二次开发时，**先问清是哪一层开源**：内核源码 / 外围壳 / 官网分发的
+  安装包是三个不同对象。MIT 只约束源码层，**下下来的 dmg/exe 是编译产物，改不了** ——
+  要改必须拿源码自己 build
+- **商标不在开源许可范围内**：改完可以发，但不能带原厂名字和 logo
+- 具体怎么查：看 `LICENSE` 覆盖到哪个目录，再看各 `package.json` 的 `license` 字段，
+  留意有没有独立的、更严格的许可
+
 ### 本机服务排障通则 (2026-09-24)
 - **"服务在跑却连不上"→ 先验第一跳**：`launchctl print-disabled gui/501 | grep <label>`。
   被标记 **disabled** 的 LaunchAgent，`launchctl load` 会静默成功但服务永不启动 ——
@@ -161,10 +169,12 @@ DOCX/Office 生成的历史做法与现状；Claude Desktop 配第三方 Provide
 - 未决：产品形态（决定亮色是否升为主模式）、中文名定稿。完整上下文见 `memory/topics/rezig.md`
 
 ### DeepSeek Harness 换皮（2026-10-01 起）
-- Tim 要用 dsh 桌面版做界面改造。内核 `deepseek-ai/deepseek-harness` 是 MIT，
-  **换皮走官方插件机制**（`ctx.theme.overrideTokens()` 覆盖 `--dsw-alias-*` 令牌），不碰源码
-- 已提议把 Rezig「高山冷光」转成第一个皮肤插件，Tim 未拍板
-- 待确认：官方桌面壳那层是否也开源（要看到 LICENSE 才算数）
+- 官方桌面版 **0.2.0-rc.2 已装**（`/Applications/DeepSeek Harness.app`），源码浅克隆在
+  `workspace/1001-deepseek-harness`。**换皮走官方插件机制**（`ctx.theme.overrideTokens()`
+  覆盖 14 个 `--dsw-alias-*` 令牌），不碰源码 —— 桌面壳虽也 MIT 开源，但自打包要 Apple
+  开发者证书，走插件才升级无痛
+- Tim 在做界面改造，之后再逐步自造插件；已提议把 Rezig「高山冷光」做成第一个皮肤插件，未拍板
+- 令牌清单 / 壳结构 / 构建命令 / 装插件顺序 → `memory/topics/deepseek-harness.md`
 
 ### 本机服务：OpenClaw + Tim'Radio（2026-09-30 更新）
 - **OpenClaw**：2026.9.5（Node v24.21.0），gateway 在跑（launchd `ai.openclaw.gateway`，
