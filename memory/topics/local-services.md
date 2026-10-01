@@ -38,6 +38,27 @@
 - 待改进（已向 Tim 提过，未动手）：把代理从全局 env 摘掉，只在 `src/tts.js` 里给
   fish.audio 单独挂 ProxyAgent，这样翻墙没开时只掉语音。
 
+### CLI 代理（2026-10-01 补上）
+
+**macOS 的系统代理只有 GUI 应用读；curl / git / npm / brew 只认环境变量
+`http_proxy` / `https_proxy` / `all_proxy`。**
+ZionLadder 只设系统代理 → 浏览器能开 GitHub，终端里 curl/git 直连照样 TCP 超时。
+症状：`scutil --proxy` 一切正常，但 `curl -I https://github.com` 卡死到超时。
+
+修复：`~/.zshrc` 末尾追加（备份 `~/.zshrc.bak-20261001`）——
+
+```bash
+if nc -z -w 1 127.0.0.1 1097 2>/dev/null; then
+  export http_proxy=http://127.0.0.1:1097
+  export https_proxy=http://127.0.0.1:1097
+  export all_proxy=socks5://127.0.0.1:1097
+fi
+export no_proxy=localhost,127.0.0.1,::1
+```
+
+`nc -z` 探活是刻意的：**代理没开时降级直连**，不会像 Tim'Radio 那样把全部 CLI 拖死。
+改了 `.zshrc` 之后**已开的终端要重开或 `source ~/.zshrc`** 才生效。
+
 ## 三、故障对照表
 
 | 症状 | 先查 | 常见结论 |
@@ -47,6 +68,7 @@
 | UI 能开但连不上、要求"登录" | 日志里找 `control-ui-build-mismatch` / `phase=auth_validated` | 页面缓存旧版 → **硬刷新**（Cmd+Shift+R）；别去动认证 |
 | 忘了"登录密码" | 它没有密码 | **Control UI 是 token 认证**；token 在 `~/.openclaw/.gateway_token`，或 `openclaw dashboard` 自动带 |
 | 出网全失败但本地通 | `lsof -nP -iTCP:1097 -sTCP:LISTEN` | ZionLadder 没开 |
+| 浏览器能上外网，终端 curl/git 全超时 | `env \| grep -i proxy` | **CLI 没接系统代理** —— 见第二节「CLI 代理」 |
 | 升级后服务不起来 | `/tmp/openclaw-update.log`、`/tmp/node-upgrade.log`、`~/.openclaw/logs/gateway-restart.log` | 升级中断留下 disabled 状态 |
 | 全部对话报 401 / 飞书不回 | `grep "401 Authentication Fails" ~/Library/Logs/openclaw/gateway.log` 看 key 尾号 | key 失效；**改 config 往往没用**，见五 |
 | 改了 key 还是不生效 | `~/.openclaw/service-env/ai.openclaw.gateway.env` 里的 `*_API_KEY` | 环境变量压过 config |

@@ -132,6 +132,11 @@ Organize by topic as your lessons grow. A flat list becomes unreadable fast.
 - 升级/修复前先读日志确认"谁在什么时候动过什么"（`/tmp/openclaw-*.log`、`/tmp/node-upgrade.log`）
 - **这台机器上可能同时有别的 session 在操作同一套服务**：动手前看
   `launchctl list | grep -i openclaw` 和 /tmp 下新增的 `*.sh`，别双开互相拆台
+- **"直连不通"先分清是网络问题还是配置层问题。** macOS 的**系统代理只有 GUI 应用读**，
+  curl/git/npm/brew 只认 `http_proxy`/`https_proxy` 环境变量。症状极具迷惑性：
+  浏览器能开 GitHub、`scutil --proxy` 显示代理一切正常，但终端 curl/git 全部超时。
+  2026-10-01 给 `~/.zshrc` 补了带 `nc -z` 探活的代理块（探活是为了避开 Tim'Radio 那个
+  "代理写死全局 env、代理一没开就全线瘫痪"的同源坑）
 - 完整拓扑 / 故障对照表 / 诊断入口 → `memory/topics/local-services.md`
 
 ### 其他工程细节 → `memory/topics/engineering.md`
@@ -154,6 +159,12 @@ DOCX/Office 生成的历史做法与现状；Claude Desktop 配第三方 Provide
   中文首选 **察音**，备选 **观智**
 - 设计系统「高山冷光 / Alpine Cold Light」，暗色优先 → `workspace/0913-rezig-design-system/DESIGN.md`
 - 未决：产品形态（决定亮色是否升为主模式）、中文名定稿。完整上下文见 `memory/topics/rezig.md`
+
+### DeepSeek Harness 换皮（2026-10-01 起）
+- Tim 要用 dsh 桌面版做界面改造。内核 `deepseek-ai/deepseek-harness` 是 MIT，
+  **换皮走官方插件机制**（`ctx.theme.overrideTokens()` 覆盖 `--dsw-alias-*` 令牌），不碰源码
+- 已提议把 Rezig「高山冷光」转成第一个皮肤插件，Tim 未拍板
+- 待确认：官方桌面壳那层是否也开源（要看到 LICENSE 才算数）
 
 ### 本机服务：OpenClaw + Tim'Radio（2026-09-30 更新）
 - **OpenClaw**：2026.9.5（Node v24.21.0），gateway 在跑（launchd `ai.openclaw.gateway`，
