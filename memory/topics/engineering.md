@@ -1,7 +1,7 @@
 # 跨项目工程经验
 
 > 自动装载层 `.claude/rules/04-MEMORY.md` 的 Technical Knowledge 只留规则与指针，案例放这里。
-> 最后更新：2026-09-26
+> 最后更新：2026-10-05
 
 ---
 
@@ -35,3 +35,22 @@
   基础对话可用，**tool use 支持有限**。
 - **结论**：要「桌面 GUI + 第三方 Provider」就用 MyAgents；
   Claude Desktop 本质是 Anthropic 原生体验，别硬掰。
+
+<a id="codex"></a>
+## Codex 桌面端 ≠ ChatGPT（2026-10-01）
+
+- **`ChatGPT.app` 其实是 OpenAI Codex 桌面端**（bundle id `com.openai.codex`），不是 ChatGPT 本体。
+  反直觉，别按名字猜 —— 2026-09-13 和 10-01 两次都差点绕进去。
+- 8-04 被一个安装脚本改成了走 deepseek，原始配置备份在 `~/.codex/backup-deepseek/`
+  （`manifest.txt` 就是那次改动的记录）。
+- **10-01 回滚到官方订阅**（app 退出后改，改前全部备份）：
+  - `~/.codex/config.toml`：删 `model` / `model_provider` / `model_catalog_json` /
+    `forced_login_method`（`= "api"` 就是 UI 登录入口被锁死、点不回订阅的原因），
+    `preferred_auth_method` 改 `"chatgpt"`，删 `[model_providers.deepseek]` 段，
+    清掉 `shell_environment_policy` 里的 `ANTHROPIC_*`
+  - `.codex-global-state.json`：清 `composer-recent-model-configurations-v1` 里的 deepseek 项
+    （不清的话模型选择器还默认选它）
+- **教训**：对共享 CODEX_HOME 跑 CLI 前先想清 auth 联动 —— 09-13 用 CLI 复现问题时被
+  `forced_login_method="api"` 拦下，CLI 自动把 ChatGPT 登录态登出（`auth.json` 被删）。
+- **遗留**：prompt-history 里有一条明文 deepseek key（8-04 Tim 自己贴进聊天框的），
+  待撤销或清理 —— Tim 还没拍板。

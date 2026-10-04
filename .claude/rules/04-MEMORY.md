@@ -152,7 +152,8 @@ Organize by topic as your lessons grow. A flat list becomes unreadable fast.
 - 完整拓扑 / 故障对照表 / 诊断入口 → `memory/topics/local-services.md`
 
 ### 其他工程细节 → `memory/topics/engineering.md`
-DOCX/Office 生成的历史做法与现状；Claude Desktop 配第三方 Provider 的结论（→ 用 MyAgents）。
+DOCX/Office 生成的历史做法与现状；Claude Desktop 配第三方 Provider 的结论（→ 用 MyAgents）；
+Codex 桌面端（**`ChatGPT.app` 实为 Codex，不是 ChatGPT**）从 deepseek 回滚官方订阅的做法。
 
 ## Ongoing Context
 
@@ -198,6 +199,9 @@ DOCX/Office 生成的历史做法与现状；Claude Desktop 配第三方 Provide
 
 ### Pending Tasks
 - Find alternative method for bulk Apple Notes deletion (AppleScript limitations encountered)
+- **凭据清理未拍板**（Tim 未决）：deepseek key 仍是 9-30 那把、未轮换；`~/.zshrc` 的
+  `claude-ds` alias 仍挂失效 key；Codex prompt-history 里有一条明文 deepseek key（8-04 遗留）。
+  细节 → `memory/topics/local-services.md`、`memory/topics/engineering.md#codex`
 
 ---
 
