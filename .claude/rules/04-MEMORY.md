@@ -131,6 +131,10 @@ Organize by topic as your lessons grow. A flat list becomes unreadable fast.
   service-env 里（正解：`export <KEY>=新值 && openclaw gateway install --force`）。
   同源：`config set` 提示"无需重启即可生效"不可信，apiKey 类改动照样要重启。
   → **改凭据前先 `grep -rl "<旧值>" ~/` 找全部落点**，一次改干净
+- **配置报错 ≠ 配置坏了 —— 可能是组件版本错配。** 同一个 `streaming` 字段，旧飞书插件
+  要 boolean、新插件要 object。**判定信号：按报错改了值、重启后报错要求的类型反转了** ——
+  那是两个组件对同一份配置的契约不一致，改值永远治不好，得把版本对齐
+  （`openclaw plugins update <name>`）。2026-09-30 只改配置，10-02 就复发了一次
 - **判断一个值有没有效，脱离被测系统去测。** key 是否可用，直接 curl 官方 API 就能一刀切开
   "key 坏" 还是 "配置没生效"，比在系统里翻日志快得多（2026-09-30 靠这招定位）
 - **OpenClaw Control UI 是 token 认证，不是密码**。Tim 会反复记成"忘记密码"（6 月就有过）。
@@ -176,15 +180,17 @@ DOCX/Office 生成的历史做法与现状；Claude Desktop 配第三方 Provide
 - Tim 在做界面改造，之后再逐步自造插件；已提议把 Rezig「高山冷光」做成第一个皮肤插件，未拍板
 - 令牌清单 / 壳结构 / 构建命令 / 装插件顺序 → `memory/topics/deepseek-harness.md`
 
-### 本机服务：OpenClaw + Tim'Radio（2026-09-30 更新）
-- **OpenClaw**：2026.9.5（Node v24.21.0），gateway 在跑（launchd `ai.openclaw.gateway`，
-  UI `http://127.0.0.1:18789/`，bind loopback 仅本机可访问）。飞书通道 running。
+### 本机服务：OpenClaw + Tim'Radio（2026-10-04 更新）
+- **OpenClaw**：网关 **2026.9.5**（Node v24.21.0），飞书插件 10-04 已对齐到 **2026.9.5**
+  （此前停在 2026.6.1，导致配置校验失败、网关起不来 → 见上方排障通则）。现在 gateway 在跑
+  （launchd `ai.openclaw.gateway`，UI `http://127.0.0.1:18789/`，bind loopback 仅本机可访问），
+  飞书通道 `running, connected`。
   **模型链**：主 `deepseek/deepseek-v4-pro` → fallback `moonshot/kimi-k2.6` → `moonshot/kimi-k3`。
   **注意**：`moonshot/` 与 `kimi/` 是两个不同产品，key 不通用 —— moonshot 走国内站
   `api.moonshot.cn`，`kimi/` 是 Kimi Coding（要 `api.kimi.com`，Tim 没订阅，配置已清）
-  **待办**：9-30 换 key 时两把都在对话里露过 → Tim 应轮换；`~/.zshrc` 的 `claude-ds`
-  alias 仍挂着那把失效 key，等他决定改还是删
-  遗留：feishu 插件版本漂移（2026.6.1）、memory search 无 openai key、可升 2026.9.6
+  **待办（截至 10-04 都还没动）**：deepseek key 仍是 9-30 那把、未轮换；
+  `~/.zshrc` 的 `claude-ds` alias 仍挂着失效 key，等 Tim 决定改还是删
+  遗留：memory search 无 openai key、OpenClaw 可升 2026.9.6
 - **Tim'Radio**：`/Users/tim/tim`，3000（主）+ 3001（网易云）常驻。
   **硬依赖 ZionLadder 提供的本地代理 `127.0.0.1:1097`** —— 其实只有 fish.audio 语音合成真需要它，
   但代理写死在全局 env，没开时整个 app 静默半死。解耦方案已提，未动手

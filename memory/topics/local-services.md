@@ -145,26 +145,49 @@ export no_proxy=localhost,127.0.0.1,::1
 - `kimi/` provider 指向 `api.moonshot.cn` 会 400（协议/端点都不对）。Tim 没有 kimi.com 订阅，
   所以 `kimi/` 这条基本用不了，`modelPolicy.allow` 里还留着 `kimi/kimi-k2.7-code`（可清理）。
 
-## 六、配置被判 invalid 会连锁锁死命令（2026-09-30）
+## 六、config 判 invalid 会连锁锁死命令（2026-09-30 初诊 / 10-04 复诊定性）
 
-`channels.feishu.streaming` 是个空对象 `{}`（升级残留，新版要求 boolean）。
-后果不是"飞书流式不生效"，而是 **整个 config 判为 invalid**，然后
-`config get/set/patch`、`models auth *`、`gateway start` **全部拒绝执行** ——
-形成"想修都不知道从哪下手"的死锁。
+**表象**：`channels.feishu.streaming` 校验不过 → **整个 config 判为 invalid** →
+`config get/set/patch`、`models auth *`、`gateway start` **全部拒绝执行**，
+形成"想修都不知道从哪下手"的死锁。此时网关一旦重启就是崩溃循环
+（launchd 反复拉起、每次被校验挡回，exit code 78，日志刷屏）。
 
-- 唯一出口是 `openclaw doctor --fix`（validate / doctor / audit / status / logs 在 invalid 时仍可跑）。
-- **`doctor --fix` 需要先停网关**，否则撞 `OpenClawAgentDatabaseLeaseActiveError`。
-  它会自己停，但**可能拉不回来**（报 `Gateway could not be restored`）—— 那就手动
-  `openclaw gateway start` 补一下。停网关期间服务是断的，要跟 Tim 打招呼。
+**真因（10-04 才定性）：插件与内核版本错配，不是配置坏。**
+同一个字段，两版飞书插件要的类型正好相反：
+
+| 飞书插件版本 | 期望 `streaming` 类型 | 报错 |
+|---|---|---|
+| 2026.6.1（旧） | boolean | `must be boolean` |
+| 2026.9.5（与网关对齐） | object | `must be object` |
+
+**判定信号**：按报错把值改了、重启后**报错要求的类型反转了** → 不是值错，
+是两个组件对同一份配置的契约不一致。只改配置 = 让两边暂时握手，
+组件下次重写配置必然复发（10-02 22:06 就是这么复发的：当时网关没重启，
+内存里还是好配置，Tim 当晚还在飞书上正常对话；等机器睡眠重启加载磁盘那份才崩）。
+**正解是把插件版本对齐内核。**
+
+**处置顺序（关键是绕开鸡生蛋）**：
+1. `openclaw doctor --fix` 先让服务能起。注意 validate / audit / status / logs 在
+   invalid 时仍可跑；`doctor --fix` 需要先停网关，否则撞
+   `OpenClawAgentDatabaseLeaseActiveError` —— 它会自己停但**可能拉不回来**，
+   那就手动 `openclaw gateway start` 补一刀
+2. `openclaw config unset <冲突字段>` —— **把字段整个删掉**，让插件用默认值。
+   装新插件时要校验配置，而配置是按老插件格式写的，不退这一步会原地死循环
+3. `openclaw plugins update <name>`（网关 2026.9.5 时，插件最高只装同为 2026.9.5
+   的版本，会自动降级到兼容版）
+4. `openclaw gateway restart` + 验证（飞书通道应显示 `running, connected`）
+
+**排查插件漂移**：`openclaw plugins list` 对比插件与网关版本；
+`openclaw doctor` 的「Plugin restart readiness」小节会直接点名。
 
 ## 七、遗留待办
 
 **OpenClaw**（doctor 报出，未处理）
-- feishu 插件版本漂移：插件 2026.6.1 vs 网关 2026.9.5
-  → `openclaw plugins update feishu && openclaw gateway restart`
+- ~~feishu 插件版本漂移 2026.6.1~~ → **2026-10-04 已升到 2026.9.5 对齐**（详见第六节）
 - memory search provider = openai 但无 API key → 语义召回不工作
 - `agents/model-registry: Invalid models.json schema` + 向量维度未解析
-- 可升 2026.9.6（这次 Node 够格，不会再卡）
+- 3 个 session SQLite issue（`openclaw doctor` 提示可 `doctor --fix` 迁移）
+- 可升 2026.9.6（插件目前被网关版本卡在 2026.9.5；升内核后插件也能跟进）
 
 **OpenClaw 模型现状（2026-09-30 修完）**
 - 主模型 `deepseek/deepseek-v4-pro`；**fallback 链**：`moonshot/kimi-k2.6` → `moonshot/kimi-k3`
