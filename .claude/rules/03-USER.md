@@ -2,8 +2,8 @@
 
 - **Name:** Tim
 - **What to call them:** Tim
-- **Pronouns:** *(to be filled)*
-- **Timezone:** *(to be filled)*
+- **Pronouns:** he/him
+- **Timezone:** Asia/Shanghai (UTC+8)
 - **Language:** Chinese (primary)
 
 ## Context

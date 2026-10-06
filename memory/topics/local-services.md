@@ -1,7 +1,7 @@
 # 本机服务运维（OpenClaw / Tim'Radio）
 
 > 覆盖 Tim 这台 Mac mini 上常驻的两套自建服务。硬件/系统：`Tim的Mac mini`，macOS 26.x，用户 `tim`。
-> 最后更新：2026-09-30
+> 最后更新：2026-10-07
 
 ## 一、服务拓扑
 
@@ -180,14 +180,49 @@ export no_proxy=localhost,127.0.0.1,::1
 **排查插件漂移**：`openclaw plugins list` 对比插件与网关版本；
 `openclaw doctor` 的「Plugin restart readiness」小节会直接点名。
 
-## 七、遗留待办
+## 七、反复故障的根因分类（2026-10-07 molt 补）
+
+**为什么要有这一节**：09-22 ~ 10-04 十六天里 OpenClaw 坏了四次，四次我都单独修好了、
+各自记了一行事件，**但直到第四次才把共同根因写下来**。前三节（故障对照表讲"症状→查什么"、
+历史事件线讲"哪天发生了什么"）都没有回答"这类事为什么会反复发生"。
+
+**根因只有一类，但换了四张脸：**
+
+> **升级 / 迁移过程被中断或半完成，留下"版本与配置互相不承认"的状态。**
+
+| 事故 | 表象 | 实际是什么 | 是否升级引发 |
+|---|---|---|---|
+| 09-22 升级失败 | 点升级后打不开 | npm 失败（Node 22 不满足 ≥24.16）→ 服务被停没拉回 | ✔ |
+| 09-24 升级善后 | "忘记密码" | 被掐断的更新助手把 LaunchAgent 设成 **disabled** | ✔ |
+| 09-30 key + 配置死锁 | 全部 401 / config invalid | `streaming: {}` 是老插件格式；换 key 又被 service-env 压住 | ✖（key 失效触发） |
+| 10-04 插件错配 | 网关崩溃循环 | 插件 2026.6.1 与网关 2026.9.5 对同一字段的契约相反 | ✔ |
+
+**三次升级 / 四次事故。** 所以：
+
+- ⛔ **停止把 `openclaw update` 当常规维护。** 在这台机器上它已经有 3/4 的翻车率。
+  真要升级，先备份 + 确认 Node 满足要求 + 升级后立刻验 `doctor` 与飞书通道
+- ✅ **判定信号（可复用）**：*按报错改了值，重启后报错要求的类型/方向反转了* →
+  不是值错，是两个组件版本不一致。此时唯一正解是**把版本对齐**，改值只是让两边暂时握手
+- ✅ **通用触发条件**：**同一套服务 30 天内第二次故障 → 停止抢修，先做根因升级。**
+  这条已进 `04-MEMORY.md` 的排障通则
+
+**上游侧的新信息（2026-10-07 外部核验，未采信为结论）**：
+OpenClaw 提供 **extended-stable 渠道**（`openclaw update --channel extended-stable`），
+当前 **2026.8.35**，自称 "current equivalent to LTS"，只含网关 + 官方 npm 插件 + Docker 镜像。
+⚠️ 证据冲突：一份中文文档告诫不要在生产网关用它；第三方 Release Safe Watch 记录过
+extended-stable 升级"重写配置、推进状态存储、回滚不干净"。**信息不足，不下判断**——
+但"这台网关恰好是升级事故重灾区，而上游专门为此开了一条慢速渠道"值得跟 Tim 谈一次。
+
+## 八、遗留待办
 
 **OpenClaw**（doctor 报出，未处理）
 - ~~feishu 插件版本漂移 2026.6.1~~ → **2026-10-04 已升到 2026.9.5 对齐**（详见第六节）
 - memory search provider = openai 但无 API key → 语义召回不工作
 - `agents/model-registry: Invalid models.json schema` + 向量维度未解析
 - 3 个 session SQLite issue（`openclaw doctor` 提示可 `doctor --fix` 迁移）
-- 可升 2026.9.6（插件目前被网关版本卡在 2026.9.5；升内核后插件也能跟进）
+- **版本现状（2026-10-07 核验）**：本机 2026.9.5；上游 stable 已到 **2026.9.7**（09-30）。
+  但**先别升** —— 见第七节，这台机器上 `openclaw update` 的翻车率是 3/4，
+  渠道策略（stable vs extended-stable）需先与 Tim 谈定
 
 **OpenClaw 模型现状（2026-09-30 修完）**
 - 主模型 `deepseek/deepseek-v4-pro`；**fallback 链**：`moonshot/kimi-k2.6` → `moonshot/kimi-k3`
@@ -203,7 +238,7 @@ export no_proxy=localhost,127.0.0.1,::1
 - 代理依赖解耦（见第二节末）
 - ZionLadder 不随开机启动 → 重启后 radio 必然静默半死
 
-## 八、诊断入口速查
+## 九、诊断入口速查
 
 ```
 # OpenClaw

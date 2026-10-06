@@ -3,7 +3,10 @@
 *Topic: Online marketing compliance for e-commerce and media promotion teams*
 
 ## Status
-Completed (2026-04-26) — Checklist created, exported to DOCX, and synced to Notion
+**CLOSED** (2026-04-26) — Checklist created, exported to DOCX, and synced to Notion
+
+> 归档标记（2026-10-07 molt）：164 天无变动，交付已完成，**不再计入 stalled 指标**。
+> 若新规出台（如 2026 Q3 修订）再重开。
 
 ## Key Facts
 

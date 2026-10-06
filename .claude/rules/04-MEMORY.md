@@ -50,6 +50,11 @@ Organize by topic as your lessons grow. A flat list becomes unreadable fast.
 
 *(How you and your human work best together.)*
 
+- **Tim 报的是入口，不是结论。**（2026-10-07 molt）他给症状、感受、直觉——
+  "忘记密码了"、"又掉线了"、"怎么都是图标啊"、"ChatGPT 怎么换回订阅"——
+  **字面意思和真实故障系统性错位，五次里五次都错位**。诊断永远是我的活：
+  从现场倒推，别照着描述修。把他的话当结论用 = 修错地方
+
 ### Communication
 - **说人话，别汇报。** 触发信号：满屏加粗/列表/表格、每条消息都"总结+展望+结尾"、
   喊口号式口头禅、表演式人格。行动：像微信聊天——短句、少格式、想到哪说到哪。
@@ -122,6 +127,10 @@ Organize by topic as your lessons grow. A flat list becomes unreadable fast.
   留意有没有独立的、更严格的许可
 
 ### 本机服务排障通则 (2026-09-24)
+- **同一套服务 30 天内第二次故障 → 停止抢修，先做根因升级。**（2026-10-07 molt）
+  OpenClaw 16 天里坏了四次（09-22 / 09-24 / 09-30 / 10-04），前三次我当成三件新事，
+  第四次才发现共同根因是"升级/迁移让版本与配置不一致"。修得快是舒适区，
+  找根因才有复利 —— **问"它为什么又坏了"，而不是"怎么修得更快"**
 - **"服务在跑却连不上"→ 先验第一跳**：`launchctl print-disabled gui/501 | grep <label>`。
   被标记 **disabled** 的 LaunchAgent，`launchctl load` 会静默成功但服务永不启动 ——
   OpenClaw 一次中断的升级就是这么把 gateway 弄死的（2026-09-21 → 09-24 才查清）
@@ -153,7 +162,8 @@ Organize by topic as your lessons grow. A flat list becomes unreadable fast.
 
 ### 其他工程细节 → `memory/topics/engineering.md`
 DOCX/Office 生成的历史做法与现状；Claude Desktop 配第三方 Provider 的结论（→ 用 MyAgents）；
-Codex 桌面端（**`ChatGPT.app` 实为 Codex，不是 ChatGPT**）从 deepseek 回滚官方订阅的做法。
+Codex 桌面端（**`ChatGPT.app` 实为 Codex，不是 ChatGPT**）从 deepseek 回滚官方订阅的做法；
+MyAgents 应用版本脉络与 #600 的修复（含"否定性结论必须带版本号和日期"这条教训）。
 
 ## Ongoing Context
 
@@ -180,6 +190,16 @@ Codex 桌面端（**`ChatGPT.app` 实为 Codex，不是 ChatGPT**）从 deepseek
   开发者证书，走插件才升级无痛
 - Tim 在做界面改造，之后再逐步自造插件；已提议把 Rezig「高山冷光」做成第一个皮肤插件，未拍板
 - 令牌清单 / 壳结构 / 构建命令 / 装插件顺序 → `memory/topics/deepseek-harness.md`
+- 上游 **v0.2 稳定版已于 2026-10-01 发布**；本机装的是 0.2.0-rc.2，是否等同当日正式版待核
+
+### 案件档案 + 双周汇报（2026-09-13 建，截至 10-07 卡在等材料）
+- Tim 的工作流工具：诉讼文书 / 律师往来邮件 → 持续维护的 `archive.md`（唯一事实源、
+  增量更新、每节点带引用回链）→ 每两周一份只报 delta 的汇报 PPT
+- 试点 **Sydney-business**（代号），档案骨架在 `workspace/cases/Sydney-business/`，
+  **inbox 至今为空，archive.md 仍是空模板**；双周定时任务按约定押后到"Tim 抽查回链验收"之后
+- **教训**：这个项目在记忆维护里隐身了 24 天——因为它只活在 09-13 那份日志里，
+  没有 topic 文件，而 gardener 只扫 topics/logs/rules。**只存在于 `workspace/` 的项目对记忆体系不可见**
+- → `memory/topics/case-archive.md`
 
 ### 本机服务：OpenClaw + Tim'Radio（2026-10-04 更新）
 - **OpenClaw**：网关 **2026.9.5**（Node v24.21.0），飞书插件 10-04 已对齐到 **2026.9.5**
@@ -189,19 +209,29 @@ Codex 桌面端（**`ChatGPT.app` 实为 Codex，不是 ChatGPT**）从 deepseek
   **模型链**：主 `deepseek/deepseek-v4-pro` → fallback `moonshot/kimi-k2.6` → `moonshot/kimi-k3`。
   **注意**：`moonshot/` 与 `kimi/` 是两个不同产品，key 不通用 —— moonshot 走国内站
   `api.moonshot.cn`，`kimi/` 是 Kimi Coding（要 `api.kimi.com`，Tim 没订阅，配置已清）
-  **待办（截至 10-04 都还没动）**：deepseek key 仍是 9-30 那把、未轮换；
-  `~/.zshrc` 的 `claude-ds` alias 仍挂着失效 key，等 Tim 决定改还是删
-  遗留：memory search 无 openai key、OpenClaw 可升 2026.9.6
+  **版本现状（2026-10-07 核验）**：本机跑 2026.9.5；上游 stable 已到 **2026.9.7**（09-30）。
+  OpenClaw 另有 **extended-stable 渠道**（`openclaw update --channel extended-stable`），
+  当前 **2026.8.35**，是"上一个月网关 + 关键修复"的 LTS 等价线，只含网关/npm 插件/Docker 镜像。
+  **待 Tim 决策（未谈）**：考虑到这台网关三周四次事故、三次由升级迁移引发，
+  慢速渠道可能比跟新版更划算 —— 但官方文档与第三方回滚报告互相矛盾，证据不足，别自作主张切
+  遗留：memory search 无 openai key
 - **Tim'Radio**：`/Users/tim/tim`，3000（主）+ 3001（网易云）常驻。
   **硬依赖 ZionLadder 提供的本地代理 `127.0.0.1:1097`** —— 其实只有 fish.audio 语音合成真需要它，
   但代理写死在全局 env，没开时整个 app 静默半死。解耦方案已提，未动手
 - 有别的 MyAgents session 也在碰这台机器。细节见 `memory/topics/local-services.md`
 
 ### Pending Tasks
-- Find alternative method for bulk Apple Notes deletion (AppleScript limitations encountered)
-- **凭据清理未拍板**（Tim 未决）：deepseek key 仍是 9-30 那把、未轮换；`~/.zshrc` 的
-  `claude-ds` alias 仍挂失效 key；Codex prompt-history 里有一条明文 deepseek key（8-04 遗留）。
+
+**格式约定**：每条带 `(since YYYY-MM-DD)`，让"挂了多久"在自动装载层可见 ——
+2026-10-07 molt 加的，针对"提了的事不跟到底"这个反复出现的毛病。超 30 天必须至少问过一次。
+
+- Apple Notes 批量删除的替代方案（AppleScript 有局限）(since 2026-04)
+- **凭据清理 —— 收敛成一次带选项的提问，别再挂着** (since 2026-09-30)：
+  ① deepseek key 仍是 9-30 那把、未轮换 → 去后台轮换后我来改 service-env
+  ② `~/.zshrc` 的 `claude-ds` alias 挂着一把**已失效**的 key → 建议直接删（无害）
+  ③ Codex prompt-history 有一条明文 deepseek key（8-04 遗留）→ 撤销或清历史，二选一
   细节 → `memory/topics/local-services.md`、`memory/topics/engineering.md#codex`
+- OpenClaw 渠道策略（stable vs extended-stable）待与 Tim 谈 (since 2026-10-07)
 
 ---
 

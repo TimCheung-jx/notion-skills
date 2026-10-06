@@ -5,6 +5,9 @@
 ## 状态速览
 
 - **已装**：官方桌面版 `0.2.0-rc.2` → `/Applications/DeepSeek Harness.app`（2026-10-01 装并启动验证通过）
+- ⚠️ **2026-10-07 核验**：上游 **v0.2 稳定版已于 2026-10-01 发布**（Win/macOS 桌面安装包）。
+  本机装的是 rc.2，**是否等同当日正式版未确认**（`unverified, last attempt 2026-10-07`）——
+  下次动这个项目前先看 app 内更新提示或官网当前版本号
 - **源码**：`workspace/1001-deepseek-harness`（depth-1 浅克隆；要更新得挂代理，见第五节）
 - **当前阶段**：Tim 在翻 `apps/desktop` 壳源码，皮肤插件尚未动工
 - **下一步**：把 Rezig「高山冷光」转成皮肤插件的 `--dsw-alias-*` 令牌

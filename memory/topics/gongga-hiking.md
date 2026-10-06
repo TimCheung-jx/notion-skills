@@ -1,7 +1,10 @@
 # Gongga Hiking Trip
 
 ## Status
-**Completed** — Trip completed 2026-05-07. Tim confirmed he's back.
+**CLOSED** — Trip completed 2026-05-07; Tim confirmed he's back and it went well.
+
+> 归档标记（2026-10-07 molt）：本 topic 无后续动作，**不再计入 stalled 指标**。
+> 文档本身保留作参考（路线、装备、可见度数据对下次高原行程仍有用）。
 
 ## Key Facts
 - **Route:** 环贡嘎精华段·轻装徒步 (7 days 6 nights)
