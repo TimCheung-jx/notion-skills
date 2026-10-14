@@ -192,11 +192,12 @@ MyAgents 应用版本脉络与 #600 的修复（含"否定性结论必须带版�
 - 令牌清单 / 壳结构 / 构建命令 / 装插件顺序 → `memory/topics/deepseek-harness.md`
 - 上游 **v0.2 稳定版已于 2026-10-01 发布**；本机装的是 0.2.0-rc.2，是否等同当日正式版待核
 
-### 案件档案 + 双周汇报（2026-09-13 建，截至 10-07 卡在等材料）
+### 案件档案 + 双周汇报（2026-09-13 建，截至 10-15 卡在等材料，32 天无进展）
 - Tim 的工作流工具：诉讼文书 / 律师往来邮件 → 持续维护的 `archive.md`（唯一事实源、
   增量更新、每节点带引用回链）→ 每两周一份只报 delta 的汇报 PPT
 - 试点 **Sydney-business**（代号），档案骨架在 `workspace/cases/Sydney-business/`，
-  **inbox 至今为空，archive.md 仍是空模板**；双周定时任务按约定押后到"Tim 抽查回链验收"之后
+  **inbox 至今为空，archive.md 仍是空模板**；双周定时任务按约定押后到"Tim 抽查回链验收"之后。
+  技术链路已就绪，**唯一缺口是 Tim 还没给首批材料，而我从未主动催过** → 见 Pending Tasks
 - **教训**：这个项目在记忆维护里隐身了 24 天——因为它只活在 09-13 那份日志里，
   没有 topic 文件，而 gardener 只扫 topics/logs/rules。**只存在于 `workspace/` 的项目对记忆体系不可见**
 - → `memory/topics/case-archive.md`
@@ -226,6 +227,9 @@ MyAgents 应用版本脉络与 #600 的修复（含"否定性结论必须带版�
 2026-10-07 molt 加的，针对"提了的事不跟到底"这个反复出现的毛病。超 30 天必须至少问过一次。
 
 - Apple Notes 批量删除的替代方案（AppleScript 有局限）(since 2026-04)
+- **案件档案试点（Sydney-business）等 Tim 给首批材料** (since 2026-09-13)：
+  技术链路已就绪，建档 32 天零进展，**从未主动催过** → 该开口问 Tim 了。
+  细节 → `memory/topics/case-archive.md`
 - **凭据清理 —— 收敛成一次带选项的提问，别再挂着** (since 2026-09-30)：
   ① deepseek key 仍是 9-30 那把、未轮换 → 去后台轮换后我来改 service-env
   ② `~/.zshrc` 的 `claude-ds` alias 挂着一把**已失效**的 key → 建议直接删（无害）
