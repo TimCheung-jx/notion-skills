@@ -167,6 +167,13 @@ Organize by topic as your lessons grow. A flat list becomes unreadable fast.
 - 微信 / 飞书是各自独立的 Session，上下文不互通
 - 诊断命令与踩坑 → `memory/topics/engineering.md#myagents-channels`
 
+### 文件交付：产出直接写 `myagents_files/` (2026-10-17)
+- 桌面聊天里能下载的附件只认工作区根部的 **`myagents_files/`**；放 `workspace/` 不会被识别
+- Widget 是内联渲染，**没有导出命令**（`myagents widget` 只有 readme；`im send-media` 仅 IM）
+- 用户说「要图 / 要下载」→ 直接出文件写进 `myagents_files/`，别只给路径或开 Finder
+- SVG→PNG 本机只有 qlmanage（补成正方形画布，`sips -c` 还是居中裁剪）→
+  `memory/topics/engineering.md#myagents-attachments`
+
 ### 其他工程细节 → `memory/topics/engineering.md`
 DOCX/Office 生成的历史做法与现状；Claude Desktop 配第三方 Provider 的结论（→ 用 MyAgents）；
 Codex 桌面端（**`ChatGPT.app` 实为 Codex，不是 ChatGPT**）从 deepseek 回滚官方订阅的做法；
@@ -184,6 +191,12 @@ MyAgents 应用版本脉络与 #600 的修复（含"否定性结论必须带版�
 - **Lucia 人格设定**（2026-05）：已固化进 `02-SOUL.md`，无需另存
 - **Apple Notes 整理**：684 条已分类、目录已建，剩下批量删除未做 → 见 Pending Tasks
 
+### 法务峰会立项（2026-10-17 起，会期 11 月底—12 月初）
+- 律协两位会长（顾、邓）对峰会立项提 5 条修改意见；预算、时间、圆桌改交流分享三条已落实
+- **卡点：企业与社会律师的交流环节** —— 供需对接会（目的性太强）vs 场外展台（遴选标准难定）
+- 10-17 决定先只跟顾会长电话沟通；方向定了才能重新走立项、报上会
+- → `memory/topics/legal-summit-2026.md`
+
 ### Rezig AI 产品（2026-09-13 起，探索中）
 - AI 产品的命名 + 设计系统。英文名 **Rezig**（源自 Chenrezig / 藏语对观音的称呼，意为「以眼注视者」），
   中文首选 **察音**，备选 **观智**
@@ -199,7 +212,7 @@ MyAgents 应用版本脉络与 #600 的修复（含"否定性结论必须带版�
 - 令牌清单 / 壳结构 / 构建命令 / 装插件顺序 → `memory/topics/deepseek-harness.md`
 - 上游 **v0.2 稳定版已于 2026-10-01 发布**；本机装的是 0.2.0-rc.2，是否等同当日正式版待核
 
-### 案件档案 + 双周汇报（2026-09-13 建，截至 10-15 卡在等材料，32 天无进展）
+### 案件档案 + 双周汇报（2026-09-13 建，截至 10-18 卡在等材料，35 天无进展）
 - Tim 的工作流工具：诉讼文书 / 律师往来邮件 → 持续维护的 `archive.md`（唯一事实源、
   增量更新、每节点带引用回链）→ 每两周一份只报 delta 的汇报 PPT
 - 试点 **Sydney-business**（代号），档案骨架在 `workspace/cases/Sydney-business/`，
@@ -235,7 +248,7 @@ MyAgents 应用版本脉络与 #600 的修复（含"否定性结论必须带版�
 
 - Apple Notes 批量删除的替代方案（AppleScript 有局限）(since 2026-04)
 - **案件档案试点（Sydney-business）等 Tim 给首批材料** (since 2026-09-13)：
-  技术链路已就绪，建档 32 天零进展，**从未主动催过** → 该开口问 Tim 了。
+  技术链路已就绪，建档 35 天零进展，**从未主动催过** → 该开口问 Tim 了。
   细节 → `memory/topics/case-archive.md`
 - **凭据清理 —— 收敛成一次带选项的提问，别再挂着** (since 2026-09-30)：
   ① deepseek key 仍是 9-30 那把、未轮换 → 去后台轮换后我来改 service-env
