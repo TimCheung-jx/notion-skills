@@ -160,6 +160,13 @@ Organize by topic as your lessons grow. A flat list becomes unreadable fast.
   "代理写死全局 env、代理一没开就全线瘫痪"的同源坑）
 - 完整拓扑 / 故障对照表 / 诊断入口 → `memory/topics/local-services.md`
 
+### MyAgents IM 渠道 ≠ 独立 OpenClaw 网关 (2026-10-17)
+- 「微信连不上 / 飞书不回」先分清两套系统：MyAgents 的渠道跑在 `plugin-bridge-dist.mjs`，
+  与 `openclaw` CLI 那个 18789 网关无关。查 `myagents agent channel list` +
+  `~/.myagents/logs/unified-*.log`，别一上来就 `openclaw status`（10-03 就这么查错了方向）
+- 微信 / 飞书是各自独立的 Session，上下文不互通
+- 诊断命令与踩坑 → `memory/topics/engineering.md#myagents-channels`
+
 ### 其他工程细节 → `memory/topics/engineering.md`
 DOCX/Office 生成的历史做法与现状；Claude Desktop 配第三方 Provider 的结论（→ 用 MyAgents）；
 Codex 桌面端（**`ChatGPT.app` 实为 Codex，不是 ChatGPT**）从 deepseek 回滚官方订阅的做法；

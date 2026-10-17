@@ -1,7 +1,7 @@
 # 跨项目工程经验
 
 > 自动装载层 `.claude/rules/04-MEMORY.md` 的 Technical Knowledge 只留规则与指针，案例放这里。
-> 最后更新：2026-10-05
+> 最后更新：2026-10-17
 
 ---
 
@@ -87,4 +87,37 @@
 正面推论：**上游未修复 ≠ 只能手改产品内部状态。** 09-22 我手改了 `projects.json`
 （删掉 `mino` 记录）才解开死锁；同样的动作今天有正规入口了。手改内部数据是最后手段，
 不是第一反应 —— 提 Issue 之后的等待窗口通常比我以为的短。
+
+<a id="myagents-channels"></a>
+## MyAgents IM 渠道 ≠ 独立 OpenClaw 网关（2026-10-17）
+
+**这是两套独立系统，看错会白查一圈。**
+
+| | MyAgents IM 渠道 | 独立 OpenClaw 网关 |
+|---|---|---|
+| 进程 | `plugin-bridge-dist.mjs --myagents-sidecar`，每个渠道一个 | launchd `ai.openclaw.gateway` |
+| 查配置 | `myagents agent channel list <agentId>` | `openclaw status` |
+| 日志 | `~/.myagents/logs/unified-YYYY-MM-DD.log`、`~/.myagents/tmp/openclaw-YYYY-MM-DD.log` | `~/Library/Logs/openclaw/gateway.log` |
+
+**2026-10-03 的坑**：Tim 说「无法和我的微信连接」，我先查 `openclaw status`，
+看到 18789 的 gateway 是 stopped —— 但那个网关跟微信渠道没关系，微信跑在
+MyAgents 的 plugin-bridge 里。系统查错了，结论自然也对不上。
+
+Lucia 当前两个渠道（同属一个 agent）：
+- `openclaw:openclaw-weixin`（tencent-weixin 插件）→ 微信
+- `openclaw:openclaw-lark` → 飞书
+
+**健康检查**：
+- 进程：`ps aux | grep plugin-bridge-dist`，`--bot-id` 对应 `channel list` 的渠道 ID
+- 微信长轮询是否活着：`lsof -nP -p <pid> -iTCP -sTCP:ESTABLISHED`，
+  应看到到 `ilinkai.weixin.qq.com`（如 `36.155.189.158:443`）的连接
+- 端点直连：`curl -m 12 -o /dev/null -w "%{http_code}" https://ilinkai.weixin.qq.com/`
+  —— **404 是正常的**，只说明网络通
+- 单次 `getUpdates: TypeError: fetch failed` 会自动重试，不等于断线
+
+**会话模型**：微信 / 飞书是各自独立的 Session，上下文不互通。用户换渠道后要接续，
+得把关键结论带过来。
+
+**未解**：2026-10-03 微信里发 `/new Lucia` 没收到回复（11 字符 inbound 后无 outbound）。
+之后 Tim 表示微信正常可用，未复现，暂不按缺陷处理。
 
