@@ -256,6 +256,9 @@ MyAgents 应用版本脉络与 #600 的修复（含"否定性结论必须带版�
   ③ Codex prompt-history 有一条明文 deepseek key（8-04 遗留）→ 撤销或清历史，二选一
   细节 → `memory/topics/local-services.md`、`memory/topics/engineering.md#codex`
 - OpenClaw 渠道策略（stable vs extended-stable）待与 Tim 谈 (since 2026-10-07)
+- **法务峰会交流环节待顾会长意见** (since 2026-10-17)：
+  定了才能重新走立项、报上会；会期 11 月底—12 月初，窗口只有一个月
+  细节 → `memory/topics/legal-summit-2026.md`
 
 ---
 

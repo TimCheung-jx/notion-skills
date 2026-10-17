@@ -121,3 +121,45 @@ Lucia 当前两个渠道（同属一个 agent）：
 **未解**：2026-10-03 微信里发 `/new Lucia` 没收到回复（11 字符 inbound 后无 outbound）。
 之后 Tim 表示微信正常可用，未复现，暂不按缺陷处理。
 
+<a id="myagents-attachments"></a>
+## 文件交付：`myagents_files/` 才是附件目录（2026-10-17）
+
+**Agent 生成的文件，只有写进工作区根部的 `myagents_files/` 才会在桌面聊天里变成可下载附件。
+放 `workspace/` 只是普通文件，客户端不呈现。**
+
+依据 `skills/myagents-docs/references/workspaces-sessions-files.md`：
+- L79：`myagents_files/` 是 Agent 产物与需要稳定引用的工作区目录之一
+- L105：Agent 生成的图片、音频、PDF 等使用统一附件形式展示，用户可在 `myagents_files/` 找到产物
+
+**Widget 没有导出能力**：
+- `<generative-ui-widget>` 是聊天内联渲染协议，不是文件
+- `myagents widget --help` 只有 `readme`，没有 export / save
+- `myagents im send-media --file` 只对 IM session 有效，桌面会话用不了
+
+→ 用户说「要图 / 要下载」时，**直接产出文件写进 `myagents_files/`**，不要只给路径或开 Finder。
+   可视内容按同一份设计另出一份 PNG/SVG。
+
+<a id="svg-to-png"></a>
+## macOS SVG → PNG（2026-10-17）
+
+本机没有 `rsvg-convert` / `inkscape` / `magick` / `cairosvg`，**只有 `qlmanage`**。
+
+```bash
+qlmanage -t -s 1400 -o /tmp/out file.svg     # → file.svg.png
+```
+
+两个坑：
+- `-s` 是最大边长，输出会被塞进**正方形画布**（1400×1400），内容顶部对齐、底部一大片空白
+- `sips -c H W` 是**居中裁剪** —— 直接裁会把顶部内容切掉
+
+正解：用 PIL 从顶部裁，高度按 viewBox 比例算。
+
+```python
+from PIL import Image
+im = Image.open(src)
+h = round(im.width * 516 / 696)      # viewBox 高 / 宽
+im.crop((0, 0, im.width, h)).save(dst)
+```
+
+裁完读一次图确认，别只看像素尺寸。
+
